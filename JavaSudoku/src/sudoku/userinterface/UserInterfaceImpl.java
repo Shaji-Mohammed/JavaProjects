@@ -34,7 +34,7 @@ public class UserInterfaceImpl implements IUserInterfaceContract.View,
     private static final double WINDOW_X = 732;
     private static final double WINDOW_Y = 668;
     private static final double BOARD_PADDING = 50;
-    private static final double BOARD_X_AND_Y = 732;
+    private static final double BOARD_X_AND_Y = 576;
 
     private static final Color WINDOW_BG_COLOR = Color.rgb(0, 150, 136);
     private static final Color BOARD_BG_COLOR = Color.rgb(224, 242, 241);
@@ -89,7 +89,7 @@ public class UserInterfaceImpl implements IUserInterfaceContract.View,
         }
     }
 
-    private Rectangle getLine(double x, double y, double height, double width) {
+    public Rectangle getLine(double x, double y, double height, double width) {
         Rectangle line = new Rectangle();
 
         line.setX(x);
@@ -145,13 +145,10 @@ public class UserInterfaceImpl implements IUserInterfaceContract.View,
         Rectangle boardBackground = new Rectangle();
         boardBackground.setX(BOARD_PADDING);
         boardBackground.setY(BOARD_PADDING);
-
         boardBackground.setWidth(BOARD_X_AND_Y);
         boardBackground.setHeight(BOARD_X_AND_Y);
-
         boardBackground.setFill(BOARD_BG_COLOR);
-
-        root.getChildren().addAll(boardBackground);
+        root.getChildren().add(boardBackground);
     }
 
     private void drawTitle(Group root) {
@@ -229,18 +226,29 @@ public class UserInterfaceImpl implements IUserInterfaceContract.View,
     }
 
     @Override
-    public void handle(KeyEvent keyEvent) {
-        if (keyEvent.getEventType() == KeyEvent.KEY_PRESSED) {
-            if (keyEvent.getText().matches("[0-9]")) {
-                int value = Integer.parseInt(keyEvent.getText());
-                handleInput(value, keyEvent.getSource());
-            } else if (keyEvent.getCode() == KeyCode.BACK_SPACE) {
-                handleInput(0, keyEvent.getSource());
+    public void handle(KeyEvent event) {
+        if (event.getEventType() == KeyEvent.KEY_PRESSED) {
+            if (event.getText().equals("0")
+                    || event.getText().equals("1")
+                    || event.getText().equals("2")
+                    || event.getText().equals("3")
+                    || event.getText().equals("4")
+                    || event.getText().equals("5")
+                    || event.getText().equals("6")
+                    || event.getText().equals("7")
+                    || event.getText().equals("8")
+                    || event.getText().equals("9")
+            ) {
+                int value = Integer.parseInt(event.getText());
+                handleInput(value, event.getSource());
+            } else if (event.getCode() == KeyCode.BACK_SPACE) {
+                handleInput(0, event.getSource());
             } else {
-                ((TextField) keyEvent.getSource()).setText("");
+                ((TextField)event.getSource()).setText("");
             }
         }
-        keyEvent.consume();
+
+        event.consume();
     }
 
     private void handleInput(int value, Object source) {
