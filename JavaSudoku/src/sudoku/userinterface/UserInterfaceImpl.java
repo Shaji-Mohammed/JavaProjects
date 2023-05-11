@@ -32,8 +32,8 @@ public class UserInterfaceImpl implements IUserInterfaceContract.View,
     private HashMap<Coordinates, SudokuTextField> textFieldCoordinates;
     private IUserInterfaceContract.EventListener listener;
 
-    private static final double WINDOW_X = 732;
-    private static final double WINDOW_Y = 668;
+    private static final double WINDOW_X = 710;
+    private static final double WINDOW_Y = 725;
     private static final double BOARD_PADDING = 55;
     private static final double BOARD_X_AND_Y = 575;
 
