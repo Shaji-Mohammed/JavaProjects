@@ -8,6 +8,8 @@ import sudoku.userinterface.UserInterfaceImpl;
 
 import java.io.IOException;
 
+import static sudoku.buildLogic.SudokuBuildLogic.build;
+
 public class SudokuApplication extends Application {
     private IUserInterfaceContract.View uiImpl;
 
@@ -15,7 +17,7 @@ public class SudokuApplication extends Application {
     public void start(Stage primaryStage) throws Exception {
         uiImpl = new UserInterfaceImpl(primaryStage);
         try{
-            SudokuBuildLogic.build(uiImpl);
+            build(uiImpl);
         } catch (IOException e) {
             e.printStackTrace();
             throw e;

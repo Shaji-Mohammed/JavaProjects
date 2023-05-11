@@ -14,6 +14,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import sudoku.constants.GameState;
 import sudoku.problemDomain.Coordinates;
@@ -33,8 +34,8 @@ public class UserInterfaceImpl implements IUserInterfaceContract.View,
 
     private static final double WINDOW_X = 732;
     private static final double WINDOW_Y = 668;
-    private static final double BOARD_PADDING = 50;
-    private static final double BOARD_X_AND_Y = 576;
+    private static final double BOARD_PADDING = 55;
+    private static final double BOARD_X_AND_Y = 575;
 
     private static final Color WINDOW_BG_COLOR = Color.rgb(0, 150, 136);
     private static final Color BOARD_BG_COLOR = Color.rgb(224, 242, 241);
@@ -155,6 +156,7 @@ public class UserInterfaceImpl implements IUserInterfaceContract.View,
         Text title = new Text(235, 690, SUDOKU);
         title.setFill(Color.WHITE);
         Font titleFont = new Font(43);
+        title.setTextAlignment(TextAlignment.CENTER);
         title.setFont(titleFont);
         root.getChildren().add(title);
     }
@@ -226,29 +228,18 @@ public class UserInterfaceImpl implements IUserInterfaceContract.View,
     }
 
     @Override
-    public void handle(KeyEvent event) {
-        if (event.getEventType() == KeyEvent.KEY_PRESSED) {
-            if (event.getText().equals("0")
-                    || event.getText().equals("1")
-                    || event.getText().equals("2")
-                    || event.getText().equals("3")
-                    || event.getText().equals("4")
-                    || event.getText().equals("5")
-                    || event.getText().equals("6")
-                    || event.getText().equals("7")
-                    || event.getText().equals("8")
-                    || event.getText().equals("9")
-            ) {
-                int value = Integer.parseInt(event.getText());
-                handleInput(value, event.getSource());
-            } else if (event.getCode() == KeyCode.BACK_SPACE) {
-                handleInput(0, event.getSource());
+    public void handle(KeyEvent keyEvent) {
+        if (keyEvent.getEventType() == KeyEvent.KEY_PRESSED) {
+            if (keyEvent.getText().matches("[0-9]")) {
+                int value = Integer.parseInt(keyEvent.getText());
+                handleInput(value, keyEvent.getSource());
+            } else if (keyEvent.getCode() == KeyCode.BACK_SPACE) {
+                handleInput(0, keyEvent.getSource());
             } else {
-                ((TextField)event.getSource()).setText("");
+                ((TextField) keyEvent.getSource()).setText("");
             }
         }
-
-        event.consume();
+        keyEvent.consume();
     }
 
     private void handleInput(int value, Object source) {
